@@ -1,0 +1,31 @@
+# Projekat za Xcode se pravi komandom:  xcodegen generate
+name: TeodoraStudio
+options:
+  bundleIdPrefix: rs.teodorateaphotography
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+
+targets:
+  TeodoraStudio:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: TeodoraStudio
+    settings:
+      base:
+        PRODUCT_NAME: Teodora
+        PRODUCT_BUNDLE_IDENTIFIER: rs.teodorateaphotography.studio
+        INFOPLIST_FILE: TeodoraStudio/Info.plist
+        TARGETED_DEVICE_FAMILY: "1,2"          # iPhone i iPad
+        CODE_SIGN_STYLE: Automatic
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        ENABLE_PREVIEWS: YES

@@ -262,6 +262,7 @@ module.exports = (ctx) => {
       locations: S().locations,
       mailUser: S().imapSameLogin ? S().smtpUser : S().imapUser,
       studio: { name: S().studioName, lines: [S().contactPhone, S().contactEmail, S().website, ...(S().locations || [])].filter(Boolean) },
+      contact: { phone: S().contactPhone, email: S().contactEmail, website: S().website, instagram: S().instagram },
       processingDays: S().processingDays,
       suggestions: { locations: uniq('location'), churches: uniq('church') },
       today: T.todayStr(),

@@ -432,7 +432,9 @@ ul.mails{padding-left:18px}
 .lc-row small{display:block;font-size:11px;color:var(--muted)}
 .lc-row span{font-size:14px;font-weight:600;letter-spacing:.04em;white-space:nowrap}
 body.print-card{display:grid;place-items:center;min-height:100vh;background:#fff;padding:20px}
-@media print{body.print-card{min-height:0}.lcard{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+@media print{body.print-card{min-height:0}.lcard,.vcard{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}.vcard{width:100%}}
+body.print-card>div{width:min(100%,760px)}
+body.print-card .vcard{width:100%}
 
 /* paketi i scenografije */
 .tabs-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
@@ -578,13 +580,26 @@ body.role-staff [data-role="admin"]{display:none!important}
 
 /* vaučeri */
 .seg .cnt{font-size:11px;color:var(--muted);margin-left:2px}
-.v-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+.v-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:18px}
 .v-item{border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:12px}
-.vcard{max-width:none;aspect-ratio:auto;min-height:220px}
-.vc-from{font-size:14px;color:var(--muted);position:relative;z-index:1}
-.vc-value{font-family:'Italiana',Georgia,serif;font-size:21px;color:var(--accent-deep);margin-top:8px;position:relative;z-index:1}
-.vc-msg{font-family:Georgia,serif;font-style:italic;font-size:15px;margin:10px 0 14px;padding-left:12px;border-left:2px solid var(--accent);white-space:pre-line;position:relative;z-index:1}
-.vcard .lc-row{margin-top:auto;padding-top:10px}
+/* vaučer: isti izgled u panelu, u emailu i na štampi */
+.vcard{position:relative;border-radius:14px;padding:clamp(18px,3.4vw,30px);color:var(--accent-deep);
+  background:radial-gradient(55% 50% at 6% -6%,var(--blush-2),transparent 72%),radial-gradient(45% 45% at 102% 94%,var(--blush-2),transparent 72%),var(--blush);
+  box-shadow:0 14px 34px rgba(74,50,54,.12);overflow:hidden;container-type:inline-size}
+.vc-head{text-align:center;font-family:'Great Vibes',cursive;font-size:clamp(20px,5cqw,34px);line-height:1.5;margin-bottom:clamp(12px,2.5cqw,22px)}
+.vc-head span{display:block}
+.vc-value{text-align:center;font-family:'Italiana',Georgia,serif;font-size:clamp(14px,2.8cqw,19px);margin:-6px 0 14px;letter-spacing:.04em}
+.vc-boxes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(8px,1.6cqw,14px)}
+.vc-box{border:2px solid var(--accent-deep);border-radius:2px;padding:7px 10px 8px;min-height:46px}
+.vc-box small{display:block;font-size:clamp(9px,1.5cqw,12px);letter-spacing:.06em;line-height:1.2}
+.vc-box b{display:block;font-weight:500;font-size:clamp(11px,1.9cqw,15px);line-height:1.35;word-break:break-word}
+.vc-msgbox{margin-top:clamp(8px,1.6cqw,14px);min-height:clamp(70px,16cqw,150px)}
+.vc-msgbox p{margin:2px 0 0;font-size:clamp(11px,1.9cqw,15px);line-height:1.5;white-space:pre-line}
+.vc-foot{display:grid;grid-template-columns:1fr 1fr;gap:clamp(6px,1.2cqw,10px) clamp(10px,2cqw,20px);margin-top:clamp(14px,2.6cqw,24px)}
+.vc-c{display:flex;align-items:flex-start;gap:8px;font-size:clamp(10px,1.7cqw,14px);line-height:1.35}
+.vc-c svg{flex:none;width:clamp(16px,2.6cqw,22px);height:clamp(16px,2.6cqw,22px);padding:4px;border-radius:50%;background:var(--accent-deep);fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;box-sizing:content-box}
+.vc-code{position:absolute;right:10px;bottom:8px;font-size:10px;letter-spacing:.05em;opacity:.55}
+@container (max-width:380px){.vc-boxes{grid-template-columns:1fr}.vc-foot{grid-template-columns:1fr}}
 .v-meta p{margin:6px 0 8px}
 .v-edit{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .v-prev{position:sticky;top:0}

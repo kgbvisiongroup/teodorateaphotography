@@ -7,15 +7,29 @@
   const ST = { active: ['Aktivan', 'ok'], used: ['Iskorišćen', 'up'], expired: ['Istekao', 'muted'] };
 
   // Isti izgled kao u emailu i na štampi
+  const ICO = {
+    mail: '<path d="M2 5h16v12H2z"/><path d="m2 6 8 6 8-6"/>',
+    web: '<circle cx="10" cy="10" r="8"/><path d="M2 10h16M10 2c2.5 2.6 2.5 12.4 0 16M10 2C7.5 4.6 7.5 14.4 10 18"/>',
+    phone: '<path d="M4 3h3.5l1.6 4-2.2 1.4a11 11 0 0 0 4.7 4.7L13 10.9l4 1.6V16c0 .6-.5 1.1-1.1 1C8.7 16.4 3.6 11.3 3 4.1 2.9 3.5 3.4 3 4 3z"/>',
+    pin: '<path d="M10 18s6-5.2 6-9.5A6 6 0 0 0 4 8.5C4 12.8 10 18 10 18z"/><circle cx="10" cy="8.4" r="2.2"/>',
+  };
+  const ico = (k) => `<svg viewBox="0 0 20 20" aria-hidden="true">${ICO[k]}</svg>`;
+
   function card(v) {
-    return `<div class="lcard vcard">
-<img data-logo src="/brand/logo" alt="">
-<span class="lc-label">Poklon vaučer</span>
-<b class="lc-name">${esc(v.recipientName || 'Ime i prezime')}</b>
-${v.fromName ? `<span class="vc-from">od: ${esc(v.fromName)}</span>` : ''}
-${v.value ? `<span class="vc-value">${esc(v.value)}</span>` : ''}
-${v.message ? `<p class="vc-msg">${esc(v.message)}</p>` : ''}
-<div class="lc-row"><div><small>Važi do</small><span>${v.validUntil ? esc(fmt.date(v.validUntil)) : '–'}</span></div><div><small>Broj vaučera</small><span>${esc(v.code || 'POK-…')}</span></div></div>
+    const c = App.meta?.contact || {};
+    const locs = App.meta?.locations || [];
+    const box = (label, value) => `<div class="vc-box"><small>${label}</small><b>${esc(value || '')}</b></div>`;
+    const line = (k, t) => (t ? `<div class="vc-c">${ico(k)}<span>${esc(t)}</span></div>` : '');
+    return `<div class="vcard">
+<div class="vc-head"><span>Poklanjam ti najlepšu uspomenu</span><span>jer je to najvredniji poklon</span></div>
+${v.value ? `<div class="vc-value">${esc(v.value)}</div>` : ''}
+<div class="vc-boxes">${box('ZA', v.recipientName)}${box('OD', v.fromName)}${box('VAŽI DO', v.validUntil ? fmt.date(v.validUntil) : '')}</div>
+<div class="vc-box vc-msgbox"><small>PORUKA</small><p>${esc(v.message || '')}</p></div>
+<div class="vc-foot">
+${line('mail', c.email)}${line('web', c.website)}${line('phone', c.phone)}
+${locs.length ? `<div class="vc-c">${ico('pin')}<span>${locs.map(esc).join('<br>')}</span></div>` : ''}
+</div>
+<span class="vc-code">${esc(v.code || 'POK-…')}</span>
 </div>`;
   }
 
@@ -134,9 +148,12 @@ ${card(v)}
   }
 
   function print(v) {
-    const s = App.meta;
-    const w = window.open('', '_blank', 'width=560,height=700');
-    w.document.write(`<!doctype html><html><head><title>Poklon vaučer ${esc(v.code)}</title><link rel="stylesheet" href="/brand/theme.css"><link rel="stylesheet" href="/admin/admin.css"></head><body class="print-card"><div>${card(v).replace('src="/brand/logo"', 'src="/brand/logo?v=' + Date.now() + '"')}<p class="print-foot">${esc((s.studio?.lines || []).join(' · '))}</p></div><script>setTimeout(()=>print(),500)<\/script></body></html>`);
+    const w = window.open('', '_blank', 'width=760,height=620');
+    // Kontakt podaci su sada deo samog vaučera, pa podnožje za štampu više nije potrebno.
+    w.document.write(`<!doctype html><html><head><title>Poklon vaučer ${esc(v.code)}</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Italiana&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/brand/theme.css"><link rel="stylesheet" href="/admin/admin.css"></head>
+<body class="print-card"><div>${card(v)}</div><script>setTimeout(()=>print(),700)<\/script></body></html>`);
     w.document.close();
   }
 

@@ -74,6 +74,27 @@ module.exports = (ctx) => {
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     res.sendFile(path.join(BRAND_DIR, b.file));
   });
+  // Panel kao aplikacija na telefonu (Dodaj na početni ekran)
+  app.get('/admin/manifest.webmanifest', (req, res) => {
+    const s = store.settings;
+    res.setHeader('Cache-Control', 'no-cache');
+    res.type('application/manifest+json').json({
+      name: `${s.studioName} – administracija`,
+      short_name: s.studioName.split(' ')[0] || 'Studio',
+      description: 'Zakazivanja, ponude, vaučeri i slanje fotografija.',
+      start_url: '/admin/',
+      scope: '/admin/',
+      display: 'standalone',
+      orientation: 'portrait-primary',
+      background_color: '#fdf8f6',
+      theme_color: s.accentColor,
+      lang: 'sr',
+      icons: [
+        { src: `/brand/icon?v=${store.data.brand.v}`, sizes: 'any', type: 'image/png', purpose: 'any' },
+      ],
+    });
+  });
+
   app.get('/api/brand', (req, res) => {
     const s = store.settings;
     res.json({ studioName: s.studioName, accentColor: s.accentColor, v: store.data.brand.v });

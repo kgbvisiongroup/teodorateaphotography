@@ -1,4 +1,4 @@
-// IN album: porudžbine albuma koje klijenti sami slažu na sajtu + formati i cene.
+// Album: porudžbine albuma koje klijenti sami slažu na sajtu + formati i cene.
 (function () {
   'use strict';
   const { $, $$, esc, fmt, api, toast, ask, modal } = App;
@@ -130,5 +130,5 @@ ${formats.length
     );
   }
 
-  App.view('albums', { title: 'IN album', sub: 'Albumi koje klijenti sami slažu na sajtu, formati i cene.', load });
+  App.view('albums', { title: 'Album', sub: 'Albumi koje klijenti sami slažu na sajtu, formati i cene.', load });
 })();

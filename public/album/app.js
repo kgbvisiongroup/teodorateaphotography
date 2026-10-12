@@ -1,4 +1,4 @@
-// IN album – uređivač u kome klijent sam slaže svoj album.
+// Album – uređivač u kome klijent sam slaže svoj album.
 (function () {
   'use strict';
   const $ = (s, r = document) => r.querySelector(s);

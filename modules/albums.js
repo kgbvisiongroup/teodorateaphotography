@@ -1,4 +1,4 @@
-// IN album: formati albuma, projekti koje klijenti sami slažu na sajtu i porudžbine.
+// Album: formati albuma, projekti koje klijenti sami slažu na sajtu i porudžbine.
 const path = require('path');
 const fs = require('fs');
 const fsp = fs.promises;

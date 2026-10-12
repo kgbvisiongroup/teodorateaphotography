@@ -94,7 +94,7 @@ ${['draft', 'sent', 'expired'].includes(o.status) ? `<button class="btn sm ${o.s
       await api('DELETE', '/api/admin/offers/' + o.id);
       load();
     }));
-    $$('[href^="#book"]').forEach((a) => (a.onclick = () => {
+    $$('#offersBox a[href^="#book?"]').forEach((a) => (a.onclick = () => {
       const o = list.find((x) => bookLink(x) === a.getAttribute('href'));
       if (o) api('POST', `/api/admin/offers/${o.id}/state`, { status: 'booked' }).catch(() => {});
     }));

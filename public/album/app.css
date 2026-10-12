@@ -1,4 +1,4 @@
-/* IN album – uređivač albuma (boje dolaze iz /brand/theme.css) */
+/* Album – uređivač albuma (boje dolaze iz /brand/theme.css) */
 :root{--ink:#4a3236;--muted:#9c8486;--line:#f0e2e2;--bar:#fff;--ed-bg:#f6f1f0}
 *{box-sizing:border-box}
 [hidden]{display:none!important}

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Napravite svoj album – {{STUDIO}}</title>
+<link rel="icon" href="/brand/icon">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/brand/theme.css">
+<link rel="stylesheet" href="/album-app/app.css?v={{V}}">
+</head>
+<body data-token="{{TOKEN}}">
+
+<!-- IZBOR FORMATA -->
+<main id="pick" class="pick" hidden>
+  <header class="pick-top">
+    <a class="logo" href="/"><img src="/brand/logo" alt="{{STUDIO}}"></a>
+    <a class="back-site" href="/">‹ Nazad na sajt</a>
+  </header>
+  <div class="pick-head">
+    <h1>Napravite svoj album</h1>
+    <p>Izaberite format, ubacite svoje fotografije i složite album onako kako želite. Mi ga štampamo i javljamo se oko preuzimanja.</p>
+  </div>
+  <div class="formats" id="formats"></div>
+</main>
+
+<!-- UREĐIVAČ -->
+<div id="editor" class="ed" hidden>
+  <header class="ed-top">
+    <a class="logo" href="/"><img src="/brand/logo" alt="{{STUDIO}}"></a>
+    <div class="undo">
+      <button id="undo" title="Poništi (Ctrl+Z)" aria-label="Poništi"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h9a6 6 0 0 1 0 12h-3"/></svg></button>
+      <button id="redo" title="Vrati (Ctrl+Y)" aria-label="Vrati"><svg viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9h-9a6 6 0 0 0 0 12h3"/></svg></button>
+    </div>
+    <span class="saved" id="saved"></span>
+    <div class="ed-top-right">
+      <button class="btn ghost" id="preview">Pogledaj</button>
+      <button class="btn" id="order">Poruči <b id="priceTop"></b></button>
+    </div>
+  </header>
+
+  <div class="ed-body">
+    <!-- leva strana: fotografije -->
+    <aside class="gal">
+      <div class="gal-head">
+        <button class="btn sm block" id="addPhotos">Učitaj slike u galeriju</button>
+        <input type="file" id="photoFile" accept=".jpg,.jpeg,.png,.webp" multiple hidden>
+      </div>
+      <div class="gal-list" id="galList"></div>
+      <p class="gal-hint" id="galHint">Prevucite slike koje ćete koristiti u albumu</p>
+      <div class="gal-foot"><b id="fmtName"></b><span id="fmtSize"></span></div>
+    </aside>
+
+    <!-- alatke -->
+    <div class="tools">
+      <button data-tool="photo" title="Dodaj okvir za sliku"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m5 16 4-4 3 3 3-3 4 4"/></svg><span>Slika</span></button>
+      <button data-tool="text" title="Dodaj tekst"><svg viewBox="0 0 24 24"><path d="M5 7V5h14v2M12 5v14M9 19h6"/></svg><span>Tekst</span></button>
+      <button data-tool="up" title="Pomeri iznad"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="13" height="13" rx="2"/><path d="M8 21h11a2 2 0 0 0 2-2V8"/></svg><span>Iznad</span></button>
+      <button data-tool="down" title="Pomeri ispod"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 3H5a2 2 0 0 0-2 2v11"/></svg><span>Ispod</span></button>
+      <button data-tool="flip" title="Obrni sliku"><svg viewBox="0 0 24 24"><path d="M12 3v18M7 7l-4 5 4 5zM17 7l4 5-4 5z"/></svg><span>Obrni</span></button>
+      <button data-tool="fit" title="Uklopi sliku u okvir"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 15v5h-5M4 15v5h5M20 9V4h-5"/></svg><span>Uklopi</span></button>
+      <button data-tool="del" title="Obriši izabrano"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg><span>Obriši</span></button>
+    </div>
+
+    <!-- platno -->
+    <section class="stage" id="stage">
+      <div class="sheet-wrap" id="sheetWrap">
+        <div class="sheet" id="sheet"></div>
+      </div>
+      <div class="stage-nav">
+        <button class="btn sm ghost" id="prevPage">‹ Prethodna strana</button>
+        <span id="pageLabel">Korice</span>
+        <button class="btn sm ghost" id="nextPage">Sledeća strana ›</button>
+      </div>
+    </section>
+
+    <!-- desna strana: raspored, pozadine, stikeri, okviri -->
+    <aside class="side">
+      <div class="side-tabs" id="sideTabs">
+        <button data-t="layouts" class="on">Raspored</button>
+        <button data-t="bg">Pozadine</button>
+        <button data-t="stickers">Stikeri</button>
+        <button data-t="frames">Okviri</button>
+      </div>
+      <div class="side-body" id="sideBody"></div>
+    </aside>
+  </div>
+
+  <!-- trake strana -->
+  <div class="strip" id="strip"></div>
+</div>
+
+<div class="sheet-dialog" id="dlg" hidden></div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="/album-app/app.js?v={{V}}"></script>
+</body>
+</html>

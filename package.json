@@ -1,0 +1,28 @@
+{
+  "name": "teodora-tea-transfer",
+  "version": "8.0.0",
+  "description": "Teodora Tea Photography – slanje fotografija klijentima",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "compression": "^1.8.2",
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
+    "imapflow": "^2.4.0",
+    "mailparser": "^3.9.38",
+    "multer": "^2.4.0",
+    "nodemailer": "^10.1.0"
+  },
+  "optionalDependencies": {
+    "sharp": "^0.35.5"
+  },
+  "engines": {
+    "node": ">=20.9"
+  },
+  "private": true
+}

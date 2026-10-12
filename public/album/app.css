@@ -26,13 +26,16 @@ h1,h2,h3{font-family:'Italiana',Georgia,serif;font-weight:400;margin:0}
 .pick-head{text-align:center;padding:clamp(34px,6vw,70px) 24px 10px}
 .pick-head h1{font-size:clamp(32px,5vw,52px)}
 .pick-head p{color:var(--muted);max-width:56ch;margin:14px auto 0}
-.formats{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:26px;width:min(1180px,100% - 48px);margin:40px auto 0}
+.formats{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:clamp(14px,2vw,26px);width:min(1180px,100% - 36px);margin:40px auto 0}
 .fmt{background:#fff;border-radius:20px;padding:26px 22px 22px;text-align:center;box-shadow:0 10px 30px rgba(74,50,54,.07);display:flex;flex-direction:column;align-items:center}
-.fmt .shape{background:linear-gradient(135deg,var(--blush),var(--wash));border-radius:6px;box-shadow:0 10px 24px rgba(74,50,54,.18);margin-bottom:18px;display:grid;place-items:center;color:var(--accent-deep);font-size:12px;letter-spacing:.18em}
+/* fiksna visina za sliku formata – naziv, cena i dugme su onda u istoj liniji na svim karticama */
+.fmt .shape-wrap{height:170px;display:grid;place-items:center;margin-bottom:16px}
+.fmt .shape{background:linear-gradient(135deg,var(--blush),var(--wash));border-radius:6px;box-shadow:0 10px 24px rgba(74,50,54,.18);display:grid;place-items:center;color:var(--accent-deep);font-size:12px;letter-spacing:.18em}
 .fmt .size{font-size:13px;letter-spacing:.14em;color:var(--muted)}
-.fmt h3{font-size:26px;margin:6px 0 12px;text-transform:uppercase;letter-spacing:.02em}
-.fmt .meta{color:var(--muted);font-size:14px;font-style:italic;line-height:1.5}
-.fmt .price{font-weight:600;font-size:19px;margin:10px 0 18px}
+.fmt h3{font-size:clamp(20px,2.4vw,26px);margin:6px 0 10px;text-transform:uppercase;letter-spacing:.02em}
+.fmt .meta{color:var(--muted);font-size:14px;font-style:italic;line-height:1.5;margin:0;flex:1}
+.fmt .price{font-weight:600;font-size:19px;margin:14px 0 16px}
+.fmt .price small{font-weight:400;font-size:13px;color:var(--muted);font-style:italic}
 .fmt .btn{width:100%;justify-content:center}
 
 /* ---------- uređivač ---------- */
@@ -156,6 +159,10 @@ h1,h2,h3{font-family:'Italiana',Georgia,serif;font-weight:400;margin:0}
 
 @media (max-width:1100px){
   .ed-body{grid-template-columns:180px 64px 1fr 240px}
+}
+@media (max-width:640px){
+  .fmt .shape-wrap{height:140px}
+  .pick-top{padding:12px 16px}
 }
 @media (max-width:860px){
   .ed-top{padding:8px 10px;gap:10px}

@@ -818,9 +818,11 @@ button.lib.on .n{opacity:1}
 .of-item input{width:100%}
 .of-item .btn.sm{padding:0;width:34px;justify-content:center}
 .of-form .row3{grid-template-columns:.75fr .75fr 1.5fr}
+.mform .row2,.mform .row3{align-items:end}  /* polja u istoj liniji i kada se naslov polja prelomi u dva reda */
 .of-total{margin-top:18px;border-top:1px solid var(--line);padding-top:12px}
 .of-total .row{display:flex;justify-content:space-between;padding:5px 0;font-size:15px}
 .of-total .row span{color:var(--muted)}
 .of-total .row b{font-weight:600}
 .of-total .row.rest b{color:var(--accent-strong)}
+@media (max-width:620px){.row2,.row3,.of-form .row3{grid-template-columns:1fr}}
 @media (max-width:560px){.of-item{grid-template-columns:1fr 56px 80px 30px}}

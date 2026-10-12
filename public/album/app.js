@@ -34,16 +34,16 @@
     $('#pick').hidden = false;
     $('#formats').innerHTML = formats
       .map((f) => {
-        const long = 150;
+        const long = 140;
         const w = f.w >= f.h ? long : Math.round((f.w / f.h) * long);
         const h = f.h > f.w ? long : Math.round((f.h / f.w) * long);
         return `<div class="fmt">
-<div class="shape" style="width:${w}px;height:${h}px">${esc(f.name.toUpperCase())}</div>
+<div class="shape-wrap"><div class="shape" style="width:${w}px;height:${h}px">${esc(f.name.toUpperCase())}</div></div>
 <span class="size">${esc(f.size)}</span>
 <h3>${esc(f.name)}</h3>
-<p class="meta">${f.spreads * 2}+ strana<br>${esc(f.cover || '')} već od</p>
-<div class="price">${money(f.price, currency)}</div>
-<button class="btn" data-f="${f.id}">Napravi svoj ${esc(f.name)}</button>
+<p class="meta">${f.spreads * 2}+ strana${f.cover ? ' · ' + esc(f.cover) : ''}</p>
+<div class="price"><small>već od</small> ${money(f.price, currency)}</div>
+<button class="btn" data-f="${f.id}">Napravi svoj album</button>
 </div>`;
       })
       .join('');

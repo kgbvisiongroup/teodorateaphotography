@@ -583,7 +583,7 @@ window.App = (function () {
     e.preventDefault();
     $('#loginErr').textContent = '';
     try {
-      await api('POST', '/api/admin/login', { username: e.target.username.value, password: e.target.password.value });
+      await api('POST', '/api/admin/login', { username: e.target.username.value, password: e.target.password.value, remember: !!e.target.remember?.checked });
       e.target.password.value = '';
       showApp(await api('GET', '/api/admin/me'));
     } catch (err) {

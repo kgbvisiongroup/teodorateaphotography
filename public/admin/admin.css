@@ -825,4 +825,9 @@ button.lib.on .n{opacity:1}
 .of-total .row b{font-weight:600}
 .of-total .row.rest b{color:var(--accent-strong)}
 @media (max-width:620px){.row2,.row3,.of-form .row3{grid-template-columns:1fr}}
+/* prijava: kvačica "Ostani prijavljen" */
+.login-card .remember{display:flex;align-items:center;gap:9px;margin:2px 0 16px;font-size:14px;color:var(--muted);text-align:left}
+.login-card .remember input{width:18px;height:18px;margin:0;flex:none;accent-color:var(--accent-strong)}
+/* na telefonu polja imaju 16px da iOS ne bi zumirao ekran pri kucanju */
+@media (max-width:760px){input,select,textarea,.dp-btn{font-size:16px}}
 @media (max-width:560px){.of-item{grid-template-columns:1fr 56px 80px 30px}}

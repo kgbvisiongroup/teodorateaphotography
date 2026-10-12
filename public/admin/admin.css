@@ -797,3 +797,15 @@ button.lib.on .n{opacity:1}
   .st-row{grid-template-columns:1fr auto auto;row-gap:8px}
   .st-row .acts{grid-column:1/-1;justify-content:flex-start}
 }
+
+/* ---------- Ponude ---------- */
+.of-item{display:grid;grid-template-columns:1fr 70px 100px 34px;gap:8px;margin-bottom:8px}
+.of-item input{width:100%}
+.of-item .btn.sm{padding:0;width:34px;justify-content:center}
+.of-form .row3{grid-template-columns:.75fr .75fr 1.5fr}
+.of-total{margin-top:18px;border-top:1px solid var(--line);padding-top:12px}
+.of-total .row{display:flex;justify-content:space-between;padding:5px 0;font-size:15px}
+.of-total .row span{color:var(--muted)}
+.of-total .row b{font-weight:600}
+.of-total .row.rest b{color:var(--accent-strong)}
+@media (max-width:560px){.of-item{grid-template-columns:1fr 56px 80px 30px}}

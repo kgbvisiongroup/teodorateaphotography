@@ -18,6 +18,7 @@ module.exports = (ctx) => {
       newRequests: (store.data.requests || []).filter((r) => r.status === 'new').length,
       lowStock: services.inventory ? services.inventory.lowCount() : 0,
       newAlbums: (store.data.albumProjects || []).filter((p) => p.status === 'ordered').length,
+      acceptedOffers: (store.data.offers || []).filter((o) => o.status === 'accepted').length,
     });
   });
 };

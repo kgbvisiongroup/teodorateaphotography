@@ -51,7 +51,7 @@ module.exports = (ctx) => {
   });
 
   // ---------- javne stranice ----------
-  const RESERVED = ['admin', 'api', 'brand', 'site', 'd', 'media', 'favicon.ico', 'robots.txt'];
+  const RESERVED = ['admin', 'api', 'brand', 'site', 'd', 'media', 'album', 'ponuda', 'favicon.ico', 'robots.txt'];
 
   app.get('/robots.txt', (req, res) => {
     const base = S().siteUrl ? S().siteUrl.replace(/\/$/, '') : '';

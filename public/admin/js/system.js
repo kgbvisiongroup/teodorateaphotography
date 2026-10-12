@@ -150,6 +150,13 @@
       ph: [['klijent', 'ime iz upita'], ['kategorija', 'vrsta fotografisanja'], ['datum', 'željeni datum'], ['vreme', 'željeno vreme'], ['lokacija', 'lokacija'], ['studio', 'naziv studija']],
       note: 'Automatski odgovor osobi koja pošalje upit preko sajta. Upit zatim stiže u „Upiti sa sajta“.',
     },
+    offer: {
+      subject: 'offerSubject',
+      body: 'offerBody',
+      btn: 'Pogledaj ponudu',
+      ph: [['ime', 'ime klijenta'], ['kategorija', 'vrsta fotografisanja'], ['paket', 'paket'], ['iznos', 'ukupan iznos'], ['kapara', 'kapara'], ['vazi_do', 'važi do'], ['broj', 'broj ponude'], ['studio', 'naziv studija']],
+      note: 'Dugme „Pogledaj ponudu“ vodi klijenta na stranicu gde prihvata ili odbija ponudu.',
+    },
     reminder: {
       subject: 'bookingReminderSubject',
       body: 'bookingReminderBody',

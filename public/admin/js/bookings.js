@@ -116,7 +116,7 @@ ${(b.status === 'processing' || b.status === 'overdue') && !opts.noAction ? `<bu
       W.step = 2;
       $('#pageTitle').textContent = 'Izmena zakazivanja';
     } else {
-      for (const k of ['email', 'phone', 'date', 'time', 'location', 'packageId', 'note', 'firstName', 'lastName', 'parentName']) {
+      for (const k of ['email', 'phone', 'date', 'time', 'location', 'packageId', 'note', 'firstName', 'lastName', 'parentName', 'deposit']) {
         if (params.get(k)) W.values[k] = params.get(k);
       }
       if (params.get('cat') && App.cat(params.get('cat'))) {

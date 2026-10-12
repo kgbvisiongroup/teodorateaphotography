@@ -17,9 +17,11 @@
     $('#navReq').textContent = s.newRequests || '';
     $('#navStock').textContent = s.lowStock || '';
     $('#navAlb').textContent = s.newAlbums || '';
+    $('#navOffers').textContent = s.acceptedOffers || '';
 
     const al = [];
     if (s.lowStock) al.push([`<b>${s.lowStock} ${s.lowStock === 1 ? 'artikal u magacinu je' : 'artikla u magacinu su'} pri kraju.</b> Poručite na vreme.`, '#stock', 'Otvori magacin']);
+    if (s.acceptedOffers) al.push([`<b>${s.acceptedOffers} ${s.acceptedOffers === 1 ? 'prihvaćena ponuda čeka' : 'prihvaćenih ponuda čeka'} zakazivanje.</b>`, '#offers?f=accepted', 'Otvori ponude']);
     if (s.newAlbums) al.push([`<b>${s.newAlbums} ${s.newAlbums === 1 ? 'nov album' : 'novih albuma'}</b> ${s.newAlbums === 1 ? 'je poručen' : 'je poručeno'} sa sajta.`, '#albums', 'Pogledaj albume']);
     if (s.newRequests) al.push([`<b>${s.newRequests} ${s.newRequests === 1 ? 'nov upit' : 'novih upita'} sa sajta</b> čeka odgovor.`, '#requests', 'Pogledaj upite']);
     if (s.overdue) al.push([`<b>Rok za obradu je istekao za ${s.overdue} ${s.overdue === 1 ? 'fotografisanje' : 'fotografisanja'}.</b>`, '#bookings?f=edit', 'Pogledaj']);

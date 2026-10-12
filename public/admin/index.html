@@ -57,6 +57,7 @@
       <a href="#calendar" data-view="calendar"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Kalendar</a>
       <a href="#bookings" data-view="bookings"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="18" r="1.2"/></svg>Zakazivanja <span class="count" id="navEdit" title="Čeka obradu"></span></a>
       <a href="#clients" data-view="clients"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5M16 4.8a3.4 3.4 0 0 1 0 6.4M18.5 14.8c1.6.8 2.6 2.5 3 5.2"/></svg>Klijenti i loyalty</a>
+      <a href="#offers" data-view="offers"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h4"/></svg>Ponude <span class="count" id="navOffers"></span></a>
       <a href="#vouchers" data-view="vouchers"><svg viewBox="0 0 24 24"><rect x="3.5" y="8" width="17" height="12" rx="1.5"/><path d="M3.5 12h17M12 8v12M12 8c-1.5-3.5-6-4-6-1.5S10 8 12 8zm0 0c1.5-3.5 6-4 6-1.5S14 8 12 8z"/></svg>Poklon vaučeri</a>
       <a href="#albums" data-view="albums"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v16M11 9h5M11 12h5"/></svg>IN album <span class="count" id="navAlb"></span></a>
       <a href="#stock" data-view="stock"><svg viewBox="0 0 24 24"><path d="M4 8.5 12 4l8 4.5v7L12 20l-8-4.5z"/><path d="m4 8.5 8 4.5 8-4.5M12 13v7"/></svg>Magacin <span class="count" id="navStock"></span></a>
@@ -152,7 +153,8 @@
     <!-- PAKETI I SCENOGRAFIJE -->
     <section class="view" id="v-catalog"><div id="catalog"></div></section>
 
-    <!-- MAGACIN -->
+    <!-- PONUDE, IN ALBUM I MAGACIN -->
+    <section class="view" id="v-offers"><div id="offersBox"></div></section>
     <section class="view" id="v-albums"><div id="inalbumBox"></div></section>
     <section class="view" id="v-stock"><div id="stockBox"></div></section>
 
@@ -353,7 +355,7 @@
 
         <div class="panel">
           <div class="panel-head"><h2>Poruke klijentima</h2>
-            <div class="seg" id="tplSeg"><button type="button" data-t="transfer" class="on">Fotografije</button><button type="button" data-t="confirm">Potvrda termina</button><button type="button" data-t="reminder">Podsetnik dan pre</button><button type="button" data-t="request">Odgovor na upit</button></div>
+            <div class="seg" id="tplSeg"><button type="button" data-t="transfer" class="on">Fotografije</button><button type="button" data-t="confirm">Potvrda termina</button><button type="button" data-t="reminder">Podsetnik dan pre</button><button type="button" data-t="request">Odgovor na upit</button><button type="button" data-t="offer">Ponuda</button></div>
           </div>
           <div class="mail-grid">
             <div>
@@ -379,6 +381,11 @@
                   <label class="f">Naslov poruke (EN)<input name="requestReplySubjectEn"></label>
                   <label class="f">Tekst (EN)<textarea name="requestReplyBodyEn" rows="9"></textarea></label>
                 </details>
+              </div>
+              <div class="tpl" data-t="offer" hidden>
+                <label class="f">Naslov poruke<input name="offerSubject" data-preview></label>
+                <label class="f">Tekst<textarea name="offerBody" rows="11" data-preview></textarea></label>
+                <label class="f">Ponuda podrazumevano važi (dana)<input name="offerValidDays" inputmode="numeric"></label>
               </div>
               <p class="sub small chips" id="chips"></p>
             </div>
@@ -448,6 +455,7 @@
 <script src="js/transfers.js?v={{V}}"></script>
 <script src="js/dash.js?v={{V}}"></script>
 <script src="js/mail.js?v={{V}}"></script>
+<script src="js/offers.js?v={{V}}"></script>
 <script src="js/vouchers.js?v={{V}}"></script>
 <script src="js/users.js?v={{V}}"></script>
 <script src="js/site.js?v={{V}}"></script>

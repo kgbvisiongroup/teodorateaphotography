@@ -19,8 +19,8 @@ Prijava traje 90 dana i sama se produžava, pa aplikacija ne traži lozinku pri 
 ## Šta vam treba
 
 1. **Mac sa Xcode-om** (besplatan, iz App Store-a)
-2. **Apple Developer nalog** – 99 $ godišnje, da bi aplikacija ostala na telefonu i išla na iPad
-   preko TestFlight-a. (Sa običnim Apple ID-jem aplikacija radi, ali ističe posle 7 dana.)
+2. **Apple Developer nalog** – 99 $ godišnje. Obavezan ako nemate kabl, jer je TestFlight
+   jedini bežični način da aplikacija dođe na telefon i tablet.
 3. Server dostupan sa interneta – adresu upisujete pri prijavi u aplikaciji
 
 ## Otvaranje na Mac-u (bez ijedne komande)
@@ -32,19 +32,39 @@ Projekat je već napravljen — `TeodoraStudio.xcodeproj` stoji u ovoj fascikli.
 3. U fascikli `ios` dvaput kliknite **TeodoraStudio.xcodeproj** — otvara se Xcode.
 4. Levo kliknite na **TeodoraStudio** (plava ikonica) → kartica **Signing & Capabilities** →
    polje *Team* → izaberite svoj Apple nalog.
-5. Povežite iPhone kablom, izaberite ga u vrhu prozora i pritisnite **▶** (Run).
+5. Pritisnite **▶** (Run) da je isprobate na Mac-u (iPhone simulator), a za instalaciju na
+   svoj telefon i tablet idite na odeljak **Bez kabla: TestFlight** ispod.
 
-Aplikacija se instalira na telefon. Pri prvom pokretanju telefon traži da joj verujete:
-*Podešavanja → Opšte → VPN i upravljanje uređajem → vaš nalog → Veruj*.
+Ako imate kabl: povežite iPhone, izaberite ga u vrhu prozora i pritisnite **▶**. Prvi put telefon
+traži da joj verujete: *Podešavanja → Opšte → VPN i upravljanje uređajem → vaš nalog → Veruj*.
 
 > Ko voli komandnu liniju: projekat se može i ponovo napraviti iz `project.yml`
 > (`brew install xcodegen && cd ios && xcodegen generate`), ali to nije potrebno.
 
-## Za iPad i za instalaciju bez kabla (TestFlight)
+## Bez kabla: instalacija preko TestFlight-a (iPhone i iPad)
 
-U Xcode-u: **Product → Archive** → *Distribute App* → **TestFlight & App Store**. Posle par minuta
-aplikacija je u TestFlight-u, pa je instalirate na iPad (i na svaki drugi uređaj) iz TestFlight
-aplikacije, bez kabla i bez objavljivanja u App Store-u.
+AirDrop ne može da instalira aplikaciju – iOS to ne dozvoljava ni iz jednog fajla. Bežični put je
+TestFlight i ide ovako:
+
+1. **Upišite se u Apple Developer Program** na `developer.apple.com/programs` (99 $ godišnje,
+   kao pojedinac; potvrda obično stigne za dan).
+2. U **App Store Connect** (`appstoreconnect.apple.com`) → *Apps* → **+** → *New App*:
+   - Platforms: iOS, Name: **Teodora**, Language: Serbian
+   - Bundle ID: `rs.teodorateaphotography.studio` (isti kao u projektu)
+   - SKU: bilo šta, npr. `teodora-1`
+3. U Xcode-u: gore pored imena aplikacije izaberite **Any iOS Device**, pa
+   **Product → Archive**. Kada se završi, u prozoru *Organizer* kliknite
+   **Distribute App → TestFlight & App Store → Upload**.
+4. Posle 10–30 minuta obrade, u App Store Connect-u otvorite **TestFlight → Internal Testing**,
+   napravite grupu i dodajte sebe (vaš Apple ID). Interno testiranje ne čeka Apple-ovu proveru.
+5. Na iPhone-u i iPad-u instalirajte **TestFlight** iz App Store-a, prijavite se istim Apple
+   ID-jem i instalirajte **Teodora**.
+
+Svaka naredna verzija se šalje istim putem (Archive → Upload), a na telefonu stiže obaveštenje.
+Build u TestFlight-u važi 90 dana; novim slanjem se rok obnavlja.
+
+> Ako kasnije dođete do kabla: prvo povezivanje telefona i Mac-a kablom otključava i
+> bežično pokretanje (Xcode → *Window → Devices and Simulators* → *Connect via network*).
 
 ## Prijava u aplikaciji
 

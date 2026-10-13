@@ -572,6 +572,7 @@ window.App = (function () {
     App.me = me;
     renderMe();
     App.meta = await api('GET', '/api/admin/meta');
+    document.body.classList.toggle('no-storage', !App.meta.storage);
     loadNotes();
     route();
   }

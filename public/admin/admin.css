@@ -472,6 +472,7 @@ body.print-card .vcard{width:100%}
    lokacije, pošta, vaučeri, korisnici
    ========================================================= */
 body.role-staff [data-role="admin"]{display:none!important}
+body.no-storage [data-storage]{display:none!important}
 .center{text-align:center}
 
 /* gornja traka */
@@ -831,3 +832,37 @@ button.lib.on .n{opacity:1}
 /* na telefonu polja imaju 16px da iOS ne bi zumirao ekran pri kucanju */
 @media (max-width:760px){input,select,textarea,.dp-btn{font-size:16px}}
 @media (max-width:560px){.of-item{grid-template-columns:1fr 56px 80px 30px}}
+
+/* ---------- Skladište fotografija ---------- */
+.st-panel{position:relative}
+.st-panel.over{outline:2px dashed var(--accent);outline-offset:-6px;background:var(--blush)}
+.st-bar{flex-wrap:wrap;gap:8px}
+.st-crumbs{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-right:auto;font-size:14px}
+.st-crumbs span{color:var(--muted)}
+.crumb{border:0;background:none;padding:2px 4px;border-radius:8px;color:var(--ink);cursor:pointer;font:inherit}
+.crumb:hover{background:var(--blush)}
+.st-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:8px}
+.st-tile{cursor:pointer}
+.st-thumb{position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;background:var(--wash);border:1px solid var(--line);display:grid;place-items:center}
+.st-thumb img{width:100%;height:100%;object-fit:cover}
+.st-ico svg{width:52px;height:52px;fill:none;stroke:var(--accent);stroke-width:1.3;stroke-linejoin:round}
+.st-ico.file svg{stroke:var(--muted)}
+.st-pick{position:absolute;left:8px;top:8px;width:22px;height:22px;border-radius:50%;border:1.5px solid #fff;background:rgba(255,255,255,.55);box-shadow:0 1px 6px rgba(74,50,54,.25);cursor:pointer;opacity:0;transition:opacity .15s}
+.st-tile:hover .st-pick,.st-tile.on .st-pick{opacity:1}
+.st-tile.on .st-pick{background:var(--accent-strong);border-color:#fff}
+.st-tile.on .st-thumb{outline:2px solid var(--accent-strong);outline-offset:2px}
+.st-name{margin-top:7px;font-size:13px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.st-tile small{color:var(--muted);font-size:11px}
+.st-count{margin-top:14px}
+.st-actions{position:sticky;bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;padding:12px 16px;border-radius:999px;background:#fff;box-shadow:0 10px 30px rgba(74,50,54,.18);border:1px solid var(--line)}
+.st-actions .grow{flex:1}
+.st-state{font-size:13px;color:var(--muted);margin:4px 0 12px}
+.st-state.ok{color:var(--ok)}
+.st-state.bad{color:var(--err)}
+.st-help{margin-top:10px}
+.st-help summary{cursor:pointer;font-size:14px;color:var(--accent-deep)}
+.st-pre{background:var(--wash);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12.5px;overflow-x:auto;white-space:pre}
+.st-prev img{display:block;max-width:100%;max-height:70vh;margin:0 auto;border-radius:12px;background:var(--wash)}
+.st-prev-bar{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:14px}
+.st-prev-bar .grow{flex:1}
+@media (max-width:620px){.st-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}}

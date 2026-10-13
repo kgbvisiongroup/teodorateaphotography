@@ -82,6 +82,79 @@ module.exports = (ctx) => {
       };
     },
     recent: (req, n) => data().transfers.filter((t) => !isExpired(t)).slice(0, n).map((t) => publicTransfer(req, t)),
+
+    /** Pošiljka od fajlova koji već postoje na disku (koristi je Skladište fotografija).
+     *  Originali se ne diraju – fajlovi se kopiraju u pošiljku, koja se sama briše kad istekne. */
+    async createFromFiles(req, { sources, client, bookingId, message, sendEmail }) {
+      if (!sources?.length) throw new Error('Nije izabran nijedan fajl.');
+      if (!client?.firstName || !client?.lastName) throw new Error('Unesite ime i prezime klijenta.');
+      if (!emailOk(client.email || '')) throw new Error('Email adresa nije ispravna.');
+
+      const id = crypto.randomBytes(8).toString('hex');
+      const dir = path.join(UPLOAD_DIR, id);
+      await fsp.mkdir(dir, { recursive: true });
+      const used = new Set();
+      const files = [];
+      try {
+        for (const src of sources) {
+          const st = await fsp.stat(src.path);
+          if (!st.isFile()) continue;
+          let name = cleanName(src.name || path.basename(src.path));
+          const ext = path.extname(name);
+          const base = name.slice(0, name.length - ext.length);
+          for (let i = 2; used.has(name.toLowerCase()); i++) name = `${base} (${i})${ext}`;
+          used.add(name.toLowerCase());
+          const fid = crypto.randomBytes(8).toString('hex');
+          const stored = fid + ext.toLowerCase();
+          await fsp.copyFile(src.path, path.join(dir, stored));
+          files.push({ id: fid, stored, name, size: st.size });
+        }
+      } catch (e) {
+        await fsp.rm(dir, { recursive: true, force: true }).catch(() => {});
+        throw e;
+      }
+      if (!files.length) {
+        await fsp.rm(dir, { recursive: true, force: true }).catch(() => {});
+        throw new Error('Izabrani fajlovi nisu pronađeni.');
+      }
+
+      const now = Date.now();
+      const t = {
+        id,
+        token: newToken(),
+        bookingId: bookingId && ctx.services.bookings?.exists(bookingId) ? bookingId : null,
+        salutation: String(client.salutation || '').trim().slice(0, 30),
+        firstName: String(client.firstName).trim().slice(0, 80),
+        lastName: String(client.lastName).trim().slice(0, 80),
+        email: String(client.email).trim().slice(0, 200),
+        message: String(message || '').trim().slice(0, 2000),
+        type: typeOf(files),
+        files,
+        totalSize: files.reduce((a, f) => a + f.size, 0),
+        createdAt: now,
+        expiresAt: now + Math.max(1, Number(store.settings.retentionDays) || 3) * DAY,
+        downloads: 0,
+        downloadLog: [],
+        fromStorage: true,
+      };
+      data().transfers.unshift(t);
+      // Vezano za zakazivanje: termin se odmah vodi kao obrađen (i skida se sa spiska za obradu)
+      if (t.bookingId) ctx.services.bookings.onDelivered(t.bookingId, t);
+      store.save();
+
+      if (sendEmail) {
+        try {
+          await mailer.sendTransfer(t, store.settings, linkFor(req, t));
+          t.emailSentAt = Date.now();
+        } catch (e) {
+          t.emailError = e.message;
+          ctx.notify({ type: 'error', title: 'Email sa linkom nije poslat', text: `${t.firstName} ${t.lastName}: ${e.message}`, link: '#list', key: 'terr:' + t.id });
+        }
+        store.save();
+      }
+      pregenerate(t);
+      return publicTransfer(req, t);
+    },
   };
 
   // ---------- sličice (prave se unapred, odmah posle slanja) ----------

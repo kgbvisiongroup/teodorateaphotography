@@ -79,7 +79,7 @@ app.use('/api/admin', (req, res, next) => {
 });
 Object.assign(ctx, auth(ctx));
 
-const MODULES = ['notifications', 'brand', 'settings', 'inventory', 'albums', 'transfers', 'bookings', 'offers', 'vouchers', 'mail', 'dashboard', 'web'];
+const MODULES = ['notifications', 'brand', 'settings', 'inventory', 'albums', 'transfers', 'bookings', 'offers', 'vouchers', 'storage', 'mail', 'dashboard', 'web'];
 for (const m of MODULES) require('./modules/' + m)(ctx);
 
 // Admin aplikacija (statički fajlovi; verzija u adresi = keš se osvežava posle ažuriranja)

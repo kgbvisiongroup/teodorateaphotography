@@ -208,5 +208,13 @@
 
   App.view('email', { role: 'admin', title: 'Email', sub: 'Nalog sa kog se šalju poruke, tekstovi poruka klijentima i obaveštenja za vas.', load: () => App.loadSettings() });
 
-  App.view('settings', { role: 'admin', title: 'Podešavanja', sub: 'Rok obrade, podsetnici, valuta, lokacije i linkovi.', load: () => App.loadSettings() });
+  App.view('settings', {
+    role: 'admin',
+    title: 'Podešavanja',
+    sub: 'Rok obrade, podsetnici, valuta, lokacije, skladište i linkovi.',
+    load: async () => {
+      await App.loadSettings();
+      App.storageSetup?.(); // panel za skladište fotografija
+    },
+  });
 })();

@@ -23,22 +23,22 @@ Prijava traje 90 dana i sama se produžava, pa aplikacija ne traži lozinku pri 
    preko TestFlight-a. (Sa običnim Apple ID-jem aplikacija radi, ali ističe posle 7 dana.)
 3. Server dostupan sa interneta – adresu upisujete pri prijavi u aplikaciji
 
-## Pravljenje projekta (jednom, na Mac-u)
+## Otvaranje na Mac-u (bez ijedne komande)
 
-```bash
-brew install xcodegen          # ako već nije instaliran
-cd ios
-xcodegen generate              # pravi TeodoraStudio.xcodeproj
-open TeodoraStudio.xcodeproj
-```
+Projekat je već napravljen — `TeodoraStudio.xcodeproj` stoji u ovoj fascikli.
 
-U Xcode-u: izaberite target **TeodoraStudio** → kartica **Signing & Capabilities** → *Team*
-izaberite svoj Apple nalog. Zatim povežite iPhone kablom, izaberite ga u vrhu prozora i
-pritisnite **▶ Run**. Aplikacija se instalira na telefon.
+1. Na Mac-u instalirajte **Xcode** iz App Store-a (besplatan, velik je, preuzima se dugo).
+2. Preuzmite kod: na GitHub-u, dugme **Code → Download ZIP**, pa raspakujte.
+3. U fascikli `ios` dvaput kliknite **TeodoraStudio.xcodeproj** — otvara se Xcode.
+4. Levo kliknite na **TeodoraStudio** (plava ikonica) → kartica **Signing & Capabilities** →
+   polje *Team* → izaberite svoj Apple nalog.
+5. Povežite iPhone kablom, izaberite ga u vrhu prozora i pritisnite **▶** (Run).
 
-> Nemate `xcodegen`? Napravite u Xcode-u nov projekat (*iOS → App*, SwiftUI, ime `TeodoraStudio`),
-> pa u njega prevucite fasciklu `TeodoraStudio/` iz ovog repozitorijuma i obrišite fajl
-> `ContentView.swift` koji Xcode sam napravi.
+Aplikacija se instalira na telefon. Pri prvom pokretanju telefon traži da joj verujete:
+*Podešavanja → Opšte → VPN i upravljanje uređajem → vaš nalog → Veruj*.
+
+> Ko voli komandnu liniju: projekat se može i ponovo napraviti iz `project.yml`
+> (`brew install xcodegen && cd ios && xcodegen generate`), ali to nije potrebno.
 
 ## Za iPad i za instalaciju bez kabla (TestFlight)
 

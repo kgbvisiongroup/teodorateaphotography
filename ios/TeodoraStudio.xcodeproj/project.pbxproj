@@ -1,0 +1,274 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		628E5015452078E46B2D4A2B /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D342816FFCF3C10CE8911ED2 /* API.swift */; };
+		3552BB009FB8DFAB86AC5244 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EA39B1FED64BDE44296835 /* App.swift */; };
+		7025CFC08386671993C6F6D8 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0101790978C3955D31EB1E /* RootView.swift */; };
+		B533206BFC58DCE36EA5D0FA /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F484F15624DBA2BD3DE8D617 /* DashboardView.swift */; };
+		A1DDB9919B5E4B76FF87C144 /* BookingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32974F04B7BBD12F01C30C1F /* BookingsView.swift */; };
+		C0CFA22FC14C6F30105F2B53 /* OffersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C3C6C30F896D4A751D34A3 /* OffersView.swift */; };
+		8F02C926E9D98C981464014A /* RequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8054AFD3D45969CC487E9 /* RequestsView.swift */; };
+		86A044CA645CF4393FEB5ABF /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C31D76C42BF599D864DC670 /* MoreView.swift */; };
+		F8E1285338D85139579740CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D40126822D0756BB2C22C0E3 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F5BF48AA40CAD7891EB709FC /* Teodora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Teodora.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D342816FFCF3C10CE8911ED2 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		D0EA39B1FED64BDE44296835 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		0D0101790978C3955D31EB1E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		F484F15624DBA2BD3DE8D617 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		32974F04B7BBD12F01C30C1F /* BookingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingsView.swift; sourceTree = "<group>"; };
+		D5C3C6C30F896D4A751D34A3 /* OffersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersView.swift; sourceTree = "<group>"; };
+		5FD8054AFD3D45969CC487E9 /* RequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsView.swift; sourceTree = "<group>"; };
+		5C31D76C42BF599D864DC670 /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
+		D40126822D0756BB2C22C0E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E34671B84360ABBFBBB0C5D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6BC9136C2E1B992EF374A2EA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8D3FC6DB5D0827F168A73277 = {
+			isa = PBXGroup;
+			children = (
+				CE882751F8B3EE4485706ED4 /* TeodoraStudio */,
+				1BADDC1D73C1A20F347483E1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CE882751F8B3EE4485706ED4 /* TeodoraStudio */ = {
+			isa = PBXGroup;
+			children = (
+				D342816FFCF3C10CE8911ED2 /* API.swift */,
+				D0EA39B1FED64BDE44296835 /* App.swift */,
+				0D0101790978C3955D31EB1E /* RootView.swift */,
+				F484F15624DBA2BD3DE8D617 /* DashboardView.swift */,
+				32974F04B7BBD12F01C30C1F /* BookingsView.swift */,
+				D5C3C6C30F896D4A751D34A3 /* OffersView.swift */,
+				5FD8054AFD3D45969CC487E9 /* RequestsView.swift */,
+				5C31D76C42BF599D864DC670 /* MoreView.swift */,
+				D40126822D0756BB2C22C0E3 /* Assets.xcassets */,
+				E34671B84360ABBFBBB0C5D2 /* Info.plist */,
+			);
+			path = TeodoraStudio;
+			sourceTree = "<group>";
+		};
+		1BADDC1D73C1A20F347483E1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F5BF48AA40CAD7891EB709FC /* Teodora.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		42AEFBAE01D2DFD981F7DA7D /* TeodoraStudio */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA175CD1FA74D86433C5E017 /* Build configuration list for PBXNativeTarget "TeodoraStudio" */;
+			buildPhases = (
+				F680599402C0D80E245DE801 /* Sources */,
+				6BC9136C2E1B992EF374A2EA /* Frameworks */,
+				781C774F390DF12CD292A30B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TeodoraStudio;
+			productName = TeodoraStudio;
+			productReference = F5BF48AA40CAD7891EB709FC /* Teodora.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		46F86FAA6BBF9AC94A7E4595 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					42AEFBAE01D2DFD981F7DA7D = {
+						CreatedOnToolsVersion = 15.2;
+					};
+				};
+			};
+			buildConfigurationList = ADD3EDE971004D3249A2A24C /* Build configuration list for PBXProject "TeodoraStudio" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8D3FC6DB5D0827F168A73277;
+			productRefGroup = 1BADDC1D73C1A20F347483E1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				42AEFBAE01D2DFD981F7DA7D /* TeodoraStudio */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		781C774F390DF12CD292A30B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8E1285338D85139579740CA /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F680599402C0D80E245DE801 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				628E5015452078E46B2D4A2B /* API.swift in Sources */,
+				3552BB009FB8DFAB86AC5244 /* App.swift in Sources */,
+				7025CFC08386671993C6F6D8 /* RootView.swift in Sources */,
+				B533206BFC58DCE36EA5D0FA /* DashboardView.swift in Sources */,
+				A1DDB9919B5E4B76FF87C144 /* BookingsView.swift in Sources */,
+				C0CFA22FC14C6F30105F2B53 /* OffersView.swift in Sources */,
+				8F02C926E9D98C981464014A /* RequestsView.swift in Sources */,
+				86A044CA645CF4393FEB5ABF /* MoreView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		765E6C4E5A890C96F6AB9A03 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A0E17C00052082C237FD3700 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7C21F0844113CDD4662725DC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = TeodoraStudio/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = rs.teodorateaphotography.studio;
+				PRODUCT_NAME = Teodora;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8321DD27710303BE5F353AE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = TeodoraStudio/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = rs.teodorateaphotography.studio;
+				PRODUCT_NAME = Teodora;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ADD3EDE971004D3249A2A24C /* Build configuration list for PBXProject "TeodoraStudio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				765E6C4E5A890C96F6AB9A03 /* Debug */,
+				A0E17C00052082C237FD3700 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA175CD1FA74D86433C5E017 /* Build configuration list for PBXNativeTarget "TeodoraStudio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7C21F0844113CDD4662725DC /* Debug */,
+				8321DD27710303BE5F353AE7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 46F86FAA6BBF9AC94A7E4595 /* Project object */;
+}

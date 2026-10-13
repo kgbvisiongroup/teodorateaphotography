@@ -257,7 +257,13 @@ window.App = (function () {
     if (views[name]?.role === 'admin' && App.me?.user?.role !== 'admin') name = 'dash';
     const def = views[name];
     current = name;
-    $$('.nav a').forEach((a) => a.classList.toggle('on', a.dataset.view === (def.nav || name)));
+    const hash = location.hash.slice(1);
+    const same = $$('.nav a').filter((a) => a.dataset.view === (def.nav || name));
+    $$('.nav a').forEach((a) => {
+      // kada više stavki vodi na isti ekran (skladište: Drive i disk), označava se tačno ona otvorena
+      const mine = a.dataset.view === (def.nav || name);
+      a.classList.toggle('on', mine && (same.length < 2 || a.getAttribute('href').slice(1) === hash));
+    });
     $$('.view').forEach((s) => s.classList.toggle('on', s.id === 'v-' + (def.el || name)));
     $('#pageTitle').textContent = def.title;
     $('#pageSub').textContent = def.sub || '';
@@ -572,9 +578,20 @@ window.App = (function () {
     App.me = me;
     renderMe();
     App.meta = await api('GET', '/api/admin/meta');
-    document.body.classList.toggle('no-storage', !App.meta.storage);
+    applyStorageNav();
     loadNotes();
     route();
+  }
+  // Skladište: stavke se u meniju pojavljuju tek kada se izvor podesi
+  function applyStorageNav() {
+    const st = App.meta?.storage || {};
+    document.body.classList.toggle('no-storage', !st.any);
+    document.body.classList.toggle('no-stdisk', !st.disk);
+    document.body.classList.toggle('no-stgoogle', !st.google);
+    const g = $('#navStGoogle');
+    const d = $('#navStDisk');
+    if (g && st.googleLabel) g.lastChild.textContent = ' ' + st.googleLabel;
+    if (d && st.diskLabel) d.lastChild.textContent = ' ' + st.diskLabel;
   }
   async function refreshMe() {
     App.me = await api('GET', '/api/admin/me');
@@ -650,7 +667,7 @@ window.App = (function () {
   return {
     $, $$, esc, fmt, two, today, addDays, daysBetween, parse, toStr, MONTHS_NOM, WD_SHORT,
     api, toast, ask, copy, modal, drawer, view, route, reloadCurrent, refreshBrand, load, cache, cat, statusPill, STATUS, start,
-    dateField, timeField, avatar, loadNotes, refreshMe,
+    dateField, timeField, avatar, loadNotes, refreshMe, applyStorageNav,
     isAdmin: () => App.me?.user?.role === 'admin',
     meta: null,
     me: null,

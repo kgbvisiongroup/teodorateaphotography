@@ -102,7 +102,7 @@ sudo mount -t cifs //IP-DISKA/ime-deljenja /mnt/foto -o credentials=/etc/samba-f
         toast(e.message);
       }
       App.meta = await api('GET', '/api/admin/meta');
-      document.body.classList.toggle('no-storage', !App.meta.storage);
+      App.applyStorageNav?.();
       setup();
     };
 
@@ -170,7 +170,13 @@ sudo mount -t cifs //IP-DISKA/ime-deljenja /mnt/foto -o credentials=/etc/samba-f
 
   // ================= pregled =================
   async function load(params) {
-    if (params?.get('provider')) prov = params.get('provider');
+    const want = params?.get('provider');
+    if (want && want !== prov) {
+      // promena izvora kreće od korena (putanje se razlikuju po izvoru)
+      prov = want;
+      D.path = '/';
+      search = '';
+    }
     if (params?.get('p')) D.path = params.get('p');
     await refresh();
   }

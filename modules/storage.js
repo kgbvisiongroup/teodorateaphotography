@@ -32,7 +32,16 @@ module.exports = (ctx) => {
   };
   const diskOn = () => !!(cfg().disk.enabled && cfg().disk.path);
   const googleOn = () => !!(cfg().google.enabled && cfg().google.refreshToken);
-  ctx.services.storage = { enabled: () => diskOn() || googleOn() };
+  ctx.services.storage = {
+    enabled: () => diskOn() || googleOn(),
+    info: () => ({
+      any: diskOn() || googleOn(),
+      disk: diskOn(),
+      google: googleOn(),
+      diskLabel: cfg().disk.label || 'Naš disk',
+      googleLabel: cfg().google.label || 'Google Drive',
+    }),
+  };
 
   const CACHE = path.join(ctx.DATA_DIR, 'stcache');
   fs.mkdirSync(CACHE, { recursive: true });

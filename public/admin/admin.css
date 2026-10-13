@@ -473,6 +473,8 @@ body.print-card .vcard{width:100%}
    ========================================================= */
 body.role-staff [data-role="admin"]{display:none!important}
 body.no-storage [data-storage]{display:none!important}
+body.no-stdisk [data-stdisk]{display:none!important}
+body.no-stgoogle [data-stgoogle]{display:none!important}
 .center{text-align:center}
 
 /* gornja traka */
@@ -871,7 +873,9 @@ button.lib.on .n{opacity:1}
 .st-src h3{font-family:'Italiana',Georgia,serif;font-weight:400;font-size:21px;margin:0 0 8px}
 .st-steps{margin:10px 0 0;padding-left:20px;font-size:14px;line-height:1.7;color:var(--muted)}
 .st-steps b{color:var(--ink);font-weight:500}
-.st-prov{margin-bottom:14px}
+/* prebacivanje izvora: u meniju na velikom ekranu, u samom ekranu na telefonu */
+.st-prov{display:none;margin-bottom:14px}
+@media (max-width:1100px){.st-prov{display:inline-flex}}
 .g-connect{text-align:center;padding:6px 0}
 .g-connect h3{font-family:'Italiana',Georgia,serif;font-weight:400;font-size:24px;margin:0 0 10px}
 .g-code{font-size:34px;letter-spacing:.22em;font-weight:600;color:var(--accent-deep);background:var(--wash);border-radius:16px;padding:16px 10px;margin:14px 0}

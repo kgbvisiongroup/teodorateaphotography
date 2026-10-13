@@ -263,7 +263,7 @@ module.exports = (ctx) => {
       mailUser: S().imapSameLogin ? S().smtpUser : S().imapUser,
       studio: { name: S().studioName, lines: [S().contactPhone, S().contactEmail, S().website, ...(S().locations || [])].filter(Boolean) },
       contact: { phone: S().contactPhone, email: S().contactEmail, website: S().website, instagram: S().instagram },
-      storage: !!ctx.services.storage?.enabled(),
+      storage: ctx.services.storage?.info?.() || { any: false, disk: false, google: false },
       processingDays: S().processingDays,
       suggestions: { locations: uniq('location'), churches: uniq('church') },
       today: T.todayStr(),

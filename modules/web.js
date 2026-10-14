@@ -265,15 +265,16 @@ module.exports = (ctx) => {
 
   // ---------- panel: biblioteka slika ----------
   app.post('/api/admin/site/images', adminOnly, async (req, res) => {
-    if (!(await ctx.runImageUpload((u) => u.array('files', 30))(req, res))) return;
+    if (!(await ctx.runImageUpload((u) => u.array('files', 100))(req, res))) return;
     const added = [];
     for (const f of req.files || []) {
       try {
-        const file = await ctx.saveImage(f.path, 'site', { width: 2200, height: 2200 });
+        // Velika verzija je dovoljna i za slider preko celog ekrana, mala za kartice i mreže.
+        const file = await ctx.saveImage(f.path, 'site', { width: 2400, height: 2400, fmt: 'webp', quality: 82 });
         let thumb = null;
         if (sharp) {
-          thumb = file.replace(/\.jpg$/, '-m.jpg');
-          await sharp(path.join(BRAND_DIR, file)).resize({ width: 900, height: 1200, fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 80, mozjpeg: true }).toFile(path.join(BRAND_DIR, thumb));
+          thumb = file.replace(/\.webp$/, '-m.webp');
+          await sharp(path.join(BRAND_DIR, file)).resize({ width: 1000, height: 1300, fit: 'inside', withoutEnlargement: true }).webp({ quality: 74 }).toFile(path.join(BRAND_DIR, thumb));
         }
         const im = { id: store.newId(6), file, thumb, at: Date.now() };
         site().images.push(im);

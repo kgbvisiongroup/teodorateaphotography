@@ -3,6 +3,8 @@ const path = require('path');
 const fs = require('fs');
 const fsp = fs.promises;
 const crypto = require('crypto');
+const os = require('os');
+const multer = require('multer');
 const { esc, formatMoney } = require('../lib/util');
 
 const clean = (v, n = 200) => String(v == null ? '' : v).replace(/[\u0000-\u001f\u007f]/g, '').trim().slice(0, n);
@@ -13,7 +15,9 @@ module.exports = (ctx) => {
   const S = () => store.settings;
   const data = () => store.data;
   const DIR = path.join(ctx.DATA_DIR, 'albums');
+  const UP_TMP = path.join(os.tmpdir(), 'album-up');
   fs.mkdirSync(DIR, { recursive: true });
+  fs.mkdirSync(UP_TMP, { recursive: true });
 
   const formats = () => data().albumFormats;
   const projects = () => data().albumProjects;
@@ -107,48 +111,74 @@ module.exports = (ctx) => {
   // ---------- fotografije klijenta ----------
   const photoDir = (p) => path.join(DIR, p.id);
 
-  app.post('/api/album/:token/photos', async (req, res) => {
+  // Fotografije klijenta: original se čuva netaknut (ide u štampu albuma), a za
+  // uređivač se prave lagane WebP verzije da rad u pregledaču bude brz.
+  const photoUpload = multer({
+    storage: multer.diskStorage({
+      destination: (req, file, cb) => cb(null, UP_TMP),
+      filename: (req, file, cb) => cb(null, 'alb-' + crypto.randomBytes(8).toString('hex') + path.extname(file.originalname || '').toLowerCase()),
+    }),
+    limits: { fileSize: (Number(ctx.MAX_FILE_MB) || 10240) * 1024 * 1024, files: 200 },
+    fileFilter: (req, file, cb) => {
+      if (/\.(jpe?g|png|webp|heic|heif|tiff?)$/i.test(file.originalname || '')) return cb(null, true);
+      const err = new Error('Dozvoljene su slike (JPG, PNG, WEBP, HEIC, TIFF).');
+      err.status = 400;
+      cb(err);
+    },
+  });
+
+  app.post('/api/album/:token/photos', (req, res) => {
     const p = byToken(req.params.token);
     if (!p) return res.status(404).json({ error: 'Album ne postoji.' });
-    if (p.photos.length >= 300) return res.status(400).json({ error: 'Dostigli ste najveći broj fotografija (300).' });
-    if (!(await ctx.runImageUpload((u) => u.array('files', 40))(req, res))) return;
-    await fsp.mkdir(photoDir(p), { recursive: true });
-    const added = [];
-    for (const f of req.files || []) {
-      try {
-        const id = crypto.randomBytes(6).toString('hex');
-        const big = path.join(photoDir(p), id + '.jpg');
-        const small = path.join(photoDir(p), id + '-m.jpg');
-        let w = 0;
-        let h = 0;
-        if (sharp) {
-          const img = sharp(f.path).rotate();
-          const meta = await img.metadata();
-          w = meta.width || 0;
-          h = meta.height || 0;
-          await img.clone().resize({ width: 2400, height: 2400, fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 88, mozjpeg: true }).toFile(big);
-          await sharp(f.path).rotate().resize({ width: 700, height: 700, fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 76 }).toFile(small);
-          await fsp.rm(f.path, { force: true });
-        } else {
-          await fsp.rename(f.path, big);
-          await fsp.copyFile(big, small);
-        }
-        const rec = { id, w, h, at: Date.now() };
-        p.photos.push(rec);
-        added.push({ id, w, h, url: `/album-photo/${p.token}/${id}`, thumb: `/album-photo/${p.token}/${id}?s=m` });
-      } catch {}
-    }
-    p.updatedAt = Date.now();
-    store.save();
-    res.json({ added });
+    photoUpload.array('files', 200)(req, res, async (err) => {
+      if (err) return res.status(400).json({ error: err.code === 'LIMIT_FILE_SIZE' ? 'Fotografija je prevelika.' : err.message });
+      await fsp.mkdir(photoDir(p), { recursive: true });
+      const added = [];
+      for (const f of req.files || []) {
+        try {
+          const id = crypto.randomBytes(6).toString('hex');
+          const ext = (path.extname(f.originalname || '') || '.jpg').toLowerCase();
+          const orig = path.join(photoDir(p), id + '-orig' + ext); // puna rezolucija, netaknuta
+          const view = path.join(photoDir(p), id + '.webp'); // za uređivač
+          const small = path.join(photoDir(p), id + '-m.webp'); // sličica u galeriji
+          let w = 0;
+          let h = 0;
+          await fsp.rename(f.path, orig).catch(async () => {
+            await fsp.copyFile(f.path, orig);
+            await fsp.rm(f.path, { force: true });
+          });
+          if (sharp) {
+            const meta = await sharp(orig).metadata().catch(() => ({}));
+            w = meta.width || 0;
+            h = meta.height || 0;
+            await sharp(orig).rotate().resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true }).webp({ quality: 82 }).toFile(view);
+            await sharp(orig).rotate().resize({ width: 700, height: 700, fit: 'inside', withoutEnlargement: true }).webp({ quality: 72 }).toFile(small);
+          }
+          const rec = { id, w, h, ext, at: Date.now(), size: (await fsp.stat(orig)).size };
+          p.photos.push(rec);
+          added.push({ id, w, h, url: `/album-photo/${p.token}/${id}`, thumb: `/album-photo/${p.token}/${id}?s=m` });
+        } catch {}
+      }
+      p.updatedAt = Date.now();
+      store.save();
+      res.json({ added });
+    });
   });
 
   app.get('/album-photo/:token/:id', (req, res) => {
     const p = byToken(req.params.token);
     const ph = p && p.photos.find((x) => x.id === req.params.id);
     if (!ph) return res.status(404).end();
-    const file = path.join(photoDir(p), ph.id + (req.query.s === 'm' ? '-m' : '') + '.jpg');
-    if (!fs.existsSync(file)) return res.status(404).end();
+    const dir = photoDir(p);
+    // ?s=m sličica, ?s=orig original u punoj rezoluciji (za štampu), inače verzija za uređivač
+    const want =
+      req.query.s === 'orig'
+        ? [ph.id + '-orig' + (ph.ext || '.jpg'), ph.id + '.webp', ph.id + '.jpg'] // stare fotografije nemaju original
+        : req.query.s === 'm'
+          ? [ph.id + '-m.webp', ph.id + '-m.jpg']
+          : [ph.id + '.webp', ph.id + '.jpg', ph.id + '-orig' + (ph.ext || '.jpg')];
+    const file = want.map((n) => path.join(dir, n)).find((f) => fs.existsSync(f));
+    if (!file) return res.status(404).end();
     res.setHeader('Cache-Control', 'private, max-age=86400');
     res.sendFile(file);
   });
@@ -158,7 +188,8 @@ module.exports = (ctx) => {
     if (!p) return res.status(404).json({ error: 'Album ne postoji.' });
     const ph = p.photos.find((x) => x.id === req.params.id);
     if (ph) {
-      for (const f of [ph.id + '.jpg', ph.id + '-m.jpg']) await fsp.rm(path.join(photoDir(p), f), { force: true });
+      for (const f of [ph.id + '.webp', ph.id + '-m.webp', ph.id + '.jpg', ph.id + '-m.jpg', ph.id + '-orig' + (ph.ext || '.jpg')])
+        await fsp.rm(path.join(photoDir(p), f), { force: true });
       p.photos = p.photos.filter((x) => x !== ph);
       for (const pg of p.pages) pg.items = (pg.items || []).filter((it) => it.photoId !== ph.id);
       store.save();

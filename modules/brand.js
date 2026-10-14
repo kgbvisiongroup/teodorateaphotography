@@ -25,7 +25,7 @@ module.exports = (ctx) => {
       destination: (req, file, cb) => cb(null, BRAND_DIR),
       filename: (req, file, cb) => cb(null, 'up-' + crypto.randomBytes(6).toString('hex') + path.extname(file.originalname).toLowerCase()),
     }),
-    limits: { fileSize: 40 * 1024 * 1024, files: 30 },
+    limits: { fileSize: 200 * 1024 * 1024, files: 100 },
     fileFilter: (req, file, cb) => {
       if (IMG_TYPES.includes(path.extname(file.originalname).toLowerCase())) return cb(null, true);
       const err = new Error('Dozvoljene su slike JPG, PNG ili WEBP.');
@@ -36,17 +36,21 @@ module.exports = (ctx) => {
   ctx.runImageUpload = (mw) => (req, res) =>
     new Promise((resolve) =>
       mw(imageUpload)(req, res, (err) => {
-        if (err) res.status(400).json({ error: err.code === 'LIMIT_FILE_SIZE' ? 'Slika je prevelika (najviše 40 MB).' : err.message });
+        if (err) res.status(400).json({ error: err.code === 'LIMIT_FILE_SIZE' ? 'Slika je prevelika (najviše 200 MB).' : err.message });
         resolve(!err);
       })
     );
-  // Smanji i sačuvaj sliku; vraća ime fajla u BRAND_DIR
-  ctx.saveImage = async (tmpPath, prefix, { width = 2600, height = 2600, fmt = 'jpeg' } = {}) => {
-    const out = `${prefix}-${crypto.randomBytes(6).toString('hex')}.${fmt === 'png' ? 'png' : 'jpg'}`;
+  // Smanji i sačuvaj sliku; vraća ime fajla u BRAND_DIR.
+  // Za sajt se koristi WebP (upola manji fajlovi uz isti kvalitet, a svi pregledači ga podržavaju).
+  const EXT = { png: 'png', webp: 'webp', jpeg: 'jpg' };
+  ctx.saveImage = async (tmpPath, prefix, { width = 2600, height = 2600, fmt = 'jpeg', quality } = {}) => {
+    const out = `${prefix}-${crypto.randomBytes(6).toString('hex')}.${EXT[fmt] || 'jpg'}`;
     try {
       if (sharp) {
         let img = sharp(tmpPath).rotate().resize({ width, height, fit: 'inside', withoutEnlargement: true });
-        img = fmt === 'png' ? img.png() : img.jpeg({ quality: 84, mozjpeg: true });
+        if (fmt === 'png') img = img.png();
+        else if (fmt === 'webp') img = img.webp({ quality: quality || 82 });
+        else img = img.jpeg({ quality: quality || 84, mozjpeg: true });
         await img.toFile(path.join(BRAND_DIR, out));
         await fsp.rm(tmpPath, { force: true });
       } else await fsp.rename(tmpPath, path.join(BRAND_DIR, out));
